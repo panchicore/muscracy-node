@@ -1,0 +1,77 @@
+type Query {
+    users: [User!]
+    radios: [Radio!]
+    searchMedia(filter: String!, radioId: String): [MediaSearchResult!]
+    mediaItems(radioId: String): [MediaItem!]
+}
+
+type Mutation {
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+    createRadio(hash: String!): Radio!
+    connectToRadio(hash: String!): Radio
+    sendMediaItem(radioId: String!, source: String!, externalId: String!, title: String!): MediaItem!
+    play(radioId: String!, mediaItemId: String!): MediaItem
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+}
+
+type Radio {
+    id: ID!
+    hash: String!
+    createdBy: User!
+    people: [RadioUser!]
+    mediaItems: [MediaItem!]
+}
+
+type RadioUser {
+    id: ID!
+    radio: Radio!
+    user: User!
+    connectedAt: String!
+}
+
+type MediaSearchResult {
+    id: ID!
+    title: String!
+    source: String!
+    exists: Boolean!
+}
+
+type MediaItem {
+    id: ID!
+    externalId: String!
+    source: String!
+    title: String!
+    sentBy: User!
+    sentAt: String!
+    radio: Radio!
+    status: MediaItemStatus!
+}
+
+enum MediaItemStatus {
+    REQUESTED
+    REJECTED
+    QUEUED
+    NOW_PLAYING
+    PLAYED
+}
+
+#
+#enum ItemOrderByInput {
+#    description_ASC
+#    description_DESC
+#    url_ASC
+#    url_DESC
+#    createdAt_ASC
+#    createdAt_DESC
+#}

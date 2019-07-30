@@ -1,0 +1,40 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+}
+
+type Radio {
+  id: ID! @id
+  hash: String! @unique
+  createdBy: User!
+  people: [RadioUser!]
+  mediaItems: [MediaItem!] @relation(name: "RadioMediaItems")
+}
+
+type RadioUser {
+  id: ID! @id
+  connectedAt: DateTime! @createdAt
+  user: User!
+  radio: Radio!
+}
+
+type MediaItem {
+  id: ID! @id
+  externalId: String!
+  title: String!
+  source: String!
+  sentBy: User!
+  sentAt: DateTime! @createdAt
+  radio: Radio! @relation(name: "RadioMediaItems")
+  status: MediaItemStatus! @default(value: QUEUED)
+}
+
+enum MediaItemStatus {
+  REQUESTED
+  REJECTED
+  QUEUED
+  NOW_PLAYING
+  PLAYED
+}

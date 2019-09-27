@@ -8,14 +8,14 @@ const User = require('./resolvers/User')
 const Radio = require('./resolvers/Radio')
 const RadioUser = require('./resolvers/RadioUser')
 const MediaItem = require('./resolvers/MediaItem')
-// const Subscription = require('./resolvers/Subscription')
+const Subscription = require('./resolvers/Subscription')
 // const Vote = require('./resolvers/Vote')
 
 
 const resolvers = {
   Query,
   Mutation,
-  // Subscription,
+  Subscription,
   User,
   Radio,
   RadioUser,
@@ -34,4 +34,4 @@ const server = new GraphQLServer({
   },
 })
 
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+server.start(() => console.log(`Server is running on http://0.0.0.0:4000`))

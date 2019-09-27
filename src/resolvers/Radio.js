@@ -6,18 +6,30 @@ function people(parent, args, context) {
   return context.prisma.radio({ id: parent.id }).people()
 }
 
-function mediaItems(parent, args, context) {
-  return context.prisma.radio({ id: parent.id }).mediaItems()
+function itemsPlaying(parent, args, context) {
+  return context.prisma.radio({ id: parent.id }).mediaItems({
+    where: {status: 'NOW_PLAYING'}
+  })
 }
 
-// function nowPlaying(parent, args, context) {
-//   return context.prisma.radio({ id: parent.id }).nowPlaying()
-// }
+function itemsQueued(parent, args, context) {
+  return context.prisma.radio({ id: parent.id }).mediaItems({
+    where: {status: 'QUEUED'}
+  })
+}
 
-
+function itemsPlayed(parent, args, context){
+  return context.prisma.radio({ id: parent.id }).mediaItems({
+    where: {status: 'PLAYED'},
+    orderBy: 'sentAt_DESC',
+    first: 20
+  })
+}
 
 module.exports = {
   createdBy,
   people,
-  mediaItems,
+  itemsPlayed,
+  itemsPlaying,
+  itemsQueued
 }

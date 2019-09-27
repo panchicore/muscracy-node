@@ -7,6 +7,7 @@ type User {
 
 type Radio {
   id: ID! @id
+  name: String!
   hash: String! @unique
   createdBy: User!
   people: [RadioUser!]
@@ -29,6 +30,9 @@ type MediaItem {
   sentAt: DateTime! @createdAt
   radio: Radio! @relation(name: "RadioMediaItems")
   status: MediaItemStatus! @default(value: QUEUED)
+  thumbnailUrl: String
+  channelTitle: String
+  publishedAt: DateTime
 }
 
 enum MediaItemStatus {

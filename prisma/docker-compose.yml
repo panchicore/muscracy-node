@@ -10,18 +10,9 @@ services:
         port: 4466
         databases:
           default:
+            database: musicracy
             connector: postgres
-            host: postgres
+            host: host.docker.internal
             port: 5432
-            user: prisma
-            password: prisma
-  postgres:
-    image: postgres:10.3
-    restart: always
-    environment:
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
-    volumes:
-      - postgres:/var/lib/postgresql/data
-volumes:
-  postgres: ~
+            user: panchicore
+            password:

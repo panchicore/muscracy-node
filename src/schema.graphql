@@ -1,17 +1,32 @@
 type Query {
     users: [User!]
+    radio(id: ID!): Radio
     radios: [Radio!]
     searchMedia(filter: String!, radioId: String): [MediaSearchResult!]
-    mediaItems(radioId: String): [MediaItem!]
 }
 
 type Mutation {
     signup(email: String!, password: String!, name: String!): AuthPayload
+    anonymousSignup: AuthPayload
     login(email: String!, password: String!): AuthPayload
-    createRadio(hash: String!): Radio!
-    connectToRadio(hash: String!): Radio
-    sendMediaItem(radioId: String!, source: String!, externalId: String!, title: String!): MediaItem!
-    play(radioId: String!, mediaItemId: String!): MediaItem
+    createRadio(name: String!): Radio!
+    connectToRadio(hash: String!): Radio!
+    sendMediaItem(
+        radioId: String!,
+        source: String!,
+        externalId: String!,
+        title: String!,
+        thumbnailUrl: String,
+        channelTitle: String,
+        publishedAt: String,
+    ): MediaItem!
+    play(radioId: String!, mediaItemId: String): MediaItem
+    finish(radioId: String!, mediaItemId: String!, playNext: Boolean!): MediaItem
+}
+
+type Subscription {
+    radioMediaItemCreated(radioId: ID!): MediaItem
+    radioMediaItemUpdated(radioId: ID!): MediaItem
 }
 
 type AuthPayload {
@@ -27,10 +42,13 @@ type User {
 
 type Radio {
     id: ID!
+    name: String!
     hash: String!
     createdBy: User!
     people: [RadioUser!]
-    mediaItems: [MediaItem!]
+    itemsPlaying: [MediaItem!]
+    itemsQueued: [MediaItem!]
+    itemsPlayed: [MediaItem!]
 }
 
 type RadioUser {
@@ -44,6 +62,9 @@ type MediaSearchResult {
     id: ID!
     title: String!
     source: String!
+    thumbnailUrl: String!
+    channelTitle: String!
+    publishedAt: String!
     exists: Boolean!
 }
 
@@ -56,6 +77,10 @@ type MediaItem {
     sentAt: String!
     radio: Radio!
     status: MediaItemStatus!
+    thumbnailUrl: String
+    channelTitle: String
+    publishedAt: String
+
 }
 
 enum MediaItemStatus {

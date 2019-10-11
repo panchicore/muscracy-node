@@ -1,4 +1,5 @@
 const {GraphQLServer} = require('graphql-yoga')
+const {GraphQLServerLambda} = require('graphql-yoga')
 const _ = require('lodash')
 const { prisma } = require('../prisma/generated/prisma-client')
 
@@ -23,7 +24,7 @@ const resolvers = {
   // Vote,
 }
 
-const server = new GraphQLServer({
+const server = new GraphQLServerLambda({
   typeDefs: './src/schema.graphql',
   resolvers,
   context: request => {
@@ -34,4 +35,5 @@ const server = new GraphQLServer({
   },
 })
 
-server.start(() => console.log(`Server is running on http://0.0.0.0:4000`))
+exports.handler = server.handler
+// server.start(() => console.log(`Server is running on http://0.0.0.0:4000`))

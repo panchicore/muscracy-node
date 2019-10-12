@@ -90,13 +90,3 @@ enum MediaItemStatus {
     NOW_PLAYING
     PLAYED
 }
-
-#
-#enum ItemOrderByInput {
-#    description_ASC
-#    description_DESC
-#    url_ASC
-#    url_DESC
-#    createdAt_ASC
-#    createdAt_DESC
-#}

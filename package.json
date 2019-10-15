@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "build": "netlify-lambda build src"
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -13,8 +12,5 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "prisma-client-lib": "^1.34.2"
-  },
-  "devDependencies": {
-    "netlify-lambda": "^1.6.3"
   }
 }
